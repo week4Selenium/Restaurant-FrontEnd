@@ -10,23 +10,23 @@ Este proyecto requiere **dos repositorios independientes**:
 
 ```bash
 # Repositorio del backend
-git clone <url-backend-repo> Sistemas-de-pedidos-restaurante-backend
+git clone https://github.com/week4Selenium/Restaurant-Backend.git
 
 # Repositorio del frontend
-git clone <url-frontend-repo> Sistemas-de-pedidos-restaurante-frontend
+git clone https://github.com/week4Selenium/Restaurant-FrontEnd.git
 ```
 
 Crear una carpeta padre que contenga ambos:
 
 ```
-proyectos/
-├── Sistemas-de-pedidos-restaurante-backend/   # Backend repo
+restaurant-system/
+├── Restaurant-Backend/                        # Backend repo
 │   ├── order-service/
 │   ├── kitchen-worker/
 │   ├── report-service/
 │   ├── pom.xml
 │   └── ...
-└── Sistemas-de-pedidos-restaurante-frontend/  # Frontend repo
+└── Restaurant-FrontEnd/                       # Frontend repo
     ├── src/
     ├── package.json
     └── ...
@@ -83,12 +83,12 @@ sequenceDiagram
 
 Crear la estructura:
 ```
-proyectos/
+restaurant-system/
 ├── docker-compose.yml          # (crear aqui)
 ├── docker-compose.dev.yml      # (crear aqui)
 ├── .env                        # (crear aqui)
-├── Sistemas-de-pedidos-restaurante-backend/
-└── Sistemas-de-pedidos-restaurante-frontend/
+├── Restaurant-Backend/
+└── Restaurant-FrontEnd/
 ```
 
 3. **Copiar archivos docker-compose:**
@@ -174,7 +174,7 @@ services:
 
   order-service:
     build:
-      context: ./Sistemas-de-pedidos-restaurante-backend
+      context: ./Restaurant-Backend
       dockerfile: order-service/Dockerfile
     container_name: restaurant-order-service
     ports:
@@ -200,7 +200,7 @@ services:
 
   kitchen-worker:
     build:
-      context: ./Sistemas-de-pedidos-restaurante-backend
+      context: ./Restaurant-Backend
       dockerfile: kitchen-worker/Dockerfile
     container_name: restaurant-kitchen-worker
     ports:
@@ -224,7 +224,7 @@ services:
 
   report-service:
     build:
-      context: ./Sistemas-de-pedidos-restaurante-backend
+      context: ./Restaurant-Backend
       dockerfile: report-service/Dockerfile
     container_name: restaurant-report-service
     ports:
@@ -248,7 +248,7 @@ services:
 
   frontend:
     build:
-      context: ./Sistemas-de-pedidos-restaurante-frontend
+      context: ./Restaurant-FrontEnd
       dockerfile: Dockerfile.frontend
     container_name: restaurant-frontend
     ports:
@@ -278,10 +278,10 @@ networks:
 services:
   order-service:
     build:
-      context: ./Sistemas-de-pedidos-restaurante-backend
+      context: ./Restaurant-Backend
       dockerfile: order-service/Dockerfile.dev
     volumes:
-      - ./Sistemas-de-pedidos-restaurante-backend/order-service/src:/app/order-service/src
+      - ./Restaurant-Backend/order-service/src:/app/order-service/src
       - maven_cache:/root/.m2
     environment:
       SPRING_DEVTOOLS_RESTART_ENABLED: "true"
@@ -289,10 +289,10 @@ services:
 
   kitchen-worker:
     build:
-      context: ./Sistemas-de-pedidos-restaurante-backend
+      context: ./Restaurant-Backend
       dockerfile: kitchen-worker/Dockerfile.dev
     volumes:
-      - ./Sistemas-de-pedidos-restaurante-backend/kitchen-worker/src:/app/kitchen-worker/src
+      - ./Restaurant-Backend/kitchen-worker/src:/app/kitchen-worker/src
       - maven_cache:/root/.m2
     environment:
       SPRING_DEVTOOLS_RESTART_ENABLED: "true"
@@ -300,10 +300,10 @@ services:
 
   report-service:
     build:
-      context: ./Sistemas-de-pedidos-restaurante-backend
+      context: ./Restaurant-Backend
       dockerfile: report-service/Dockerfile.dev
     volumes:
-      - ./Sistemas-de-pedidos-restaurante-backend/report-service/src:/app/report-service/src
+      - ./Restaurant-Backend/report-service/src:/app/report-service/src
       - maven_cache:/root/.m2
     environment:
       SPRING_DEVTOOLS_RESTART_ENABLED: "true"
@@ -311,10 +311,10 @@ services:
 
   frontend:
     build:
-      context: ./Sistemas-de-pedidos-restaurante-frontend
+      context: ./Restaurant-FrontEnd
       dockerfile: Dockerfile.frontend.dev
     volumes:
-      - ./Sistemas-de-pedidos-restaurante-frontend:/app
+      - ./Restaurant-FrontEnd:/app
       - /app/node_modules
     environment:
       CHOKIDAR_USEPOLLING: "true"
@@ -482,7 +482,7 @@ curl "http://localhost:8080/orders?status=PENDING,IN_PREPARATION,READY" \
 ## Estructura del repositorio
 
 ```
-Sistemas-de-pedidos-restaurante-frontend/
+Restaurant-FrontEnd/
 ├── src/
 │   ├── api/                 # Llamadas HTTP al backend
 │   ├── app/                 # Contextos y providers
